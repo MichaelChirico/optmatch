@@ -20,11 +20,11 @@ Imports:
     Rcpp,
     stats,
     methods,
-    graphics,
-    survey
+    graphics
 Suggests:
     boot,
     biglm,
+    survey,
     testthat (>= 0.11.0),
     roxygen2,
     brglm,
