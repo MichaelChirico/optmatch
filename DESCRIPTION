@@ -19,7 +19,6 @@ LinkingTo: Rcpp
 Imports:
     Rcpp,
     RItools,
-    digest,
     stats,
     methods,
     graphics,
