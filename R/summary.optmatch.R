@@ -28,7 +28,6 @@
 #' @seealso \code{\link{print.optmatch}}
 #' @method summary optmatch
 #' @rdname optmatch
-#' @importFrom RItools xBalance
 #' @export
 summary.optmatch <- function(object,
                              propensity.model = NULL, ...,
@@ -120,11 +119,17 @@ summary.optmatch <- function(object,
       stop("'summary' method unable to recreate data. Consider passing 'data' argument to 'pairmatch' or 'fullmatch'.")
     }
 
-    so$balance <- RItools::xBalance(fmla = formula(propensity.model),
-                           strata = strata,
-                           data = data,
-                           report = c('adj.means', 'z.scores', 'chisquare.test'),
-                           na.rm = na.behavior)
+    if (requireNamespace("RItools", quietly = TRUE)) {
+      so$balance <- RItools::xBalance(fmla = formula(propensity.model),
+                                      strata = strata,
+                                      data = data,
+                                      report = c('adj.means', 'z.scores', 'chisquare.test'),
+                                      na.rm = na.behavior)
+    } else {
+      so$warnings <- c(so$warning,
+                       "For covariate balance information, the 'RItools' package must be installed.")
+    }
+
 
   } else if (!is.null(propensity.model)) so$warnings <-
     c(so$warnings,
